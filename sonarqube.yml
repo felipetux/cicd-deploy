@@ -58,6 +58,8 @@ objects:
       app: sonarqube
       template: postgresql-persistent-template
     name: sonardb
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
   spec:
     replicas: 1
     selector:
@@ -158,6 +160,8 @@ objects:
     labels:
       app: sonarqube
     name: sonarqube
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
   spec:
     replicas: 1
     selector:
