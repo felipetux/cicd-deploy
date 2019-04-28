@@ -373,7 +373,7 @@ parameters:
     displayName: Postgres username
     name: POSTGRES_USERNAME
     generate: expression
-    from: 'user[a-z0-9]{8}'
+    from: 'sonar[a-z0-9]{8}'
     required: true
   - description: Database name for the Posgres Database to be used by Sonarqube
     displayName: Postgres database name
