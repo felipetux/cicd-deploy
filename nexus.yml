@@ -18,7 +18,7 @@ objects:
     tags:
     - from:
         kind: DockerImage
-        name: docker.io/sonatype/nexus3:${NEXUS_VERSION}
+        name: sonatype/nexus3:${NEXUS_VERSION}
       name: ${NEXUS_VERSION}
 - apiVersion: v1
   kind: DeploymentConfig
@@ -158,7 +158,7 @@ parameters:
 - displayName: Sonatype Nexus version
   name: NEXUS_VERSION
   required: true
-  value: 3.16.0
+  value: 3.16.0-01-rhel
 - description: Volume space available for Sonatype Nexus e.g. 512Mi, 2Gi
   displayName: Volume Space for Nexus
   name: VOLUME_CAPACITY
