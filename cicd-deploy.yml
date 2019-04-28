@@ -70,7 +70,7 @@ objects:
   metadata:
     name: cicd-deploy
   spec:
-    activeDeadlineSeconds: 100
+    activeDeadlineSeconds: 180
     completions: 1
     parallelism: 1
     template:
