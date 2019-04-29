@@ -106,8 +106,3 @@ objects:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
         restartPolicy: Never
-parameters:
-- displayName: Remove CICD applications from proyect
-  name: REMOVECICD
-  required: false
-  value: false
