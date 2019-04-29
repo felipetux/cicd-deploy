@@ -108,7 +108,7 @@ objects:
 - apiVersion: batch/v1
   kind: Job
   metadata:
-    name: cicd-demo-installer
+    name: cicd-deploy
   spec:
     activeDeadlineSeconds: 180
     completions: 1
@@ -140,7 +140,7 @@ objects:
             oc new-app -f https://raw.githubusercontent.com/felipetux/cicd-deploy/master/nexus.yml
             oc new-app -f https://raw.githubusercontent.com/felipetux/cicd-deploy/master/sonarqube.yml        
           image: openshift3/jenkins-slave-base-rhel7
-          name: cicd-demo-installer-job
+          name: cicd-deploy
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
