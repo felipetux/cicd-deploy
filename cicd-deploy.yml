@@ -130,7 +130,7 @@ objects:
                sleep 15
             fi
             
-            oc adm new-project cicd5 --node-selector='cicd-tools=true'
+            oc adm new-project cicd5 --node-selector="cicd-tools=true"
             
             oc new-app jenkins-persistent
             #oc label dc jenkins app=jenkins --overwrite
