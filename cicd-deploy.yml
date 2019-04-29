@@ -9,6 +9,11 @@ metadata:
     tags: instant-app,jenkins,nexus,cicd,sonarqube
   name: cicd
 message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials\nNexus: admin/admin123\nSonarQube: admin/admin\nGogs Git Server: gogs/gogs"
+parameters:
+- displayName: Remove apps on actual CICD Proyect
+  value: "false"
+  name: REMOVE_CICD
+  required: true
 objects:
 - apiVersion: v1
   groupNames: null
@@ -251,8 +256,3 @@ objects:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
         restartPolicy: Never
-parameters:
-- displayName: Remove apps on actual CICD Proyect
-  value: false
-  name: REMOVE_CICD
-  required: true
