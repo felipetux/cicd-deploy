@@ -29,7 +29,6 @@ objects:
   kind: ConfigMap
   metadata:
     labels:
-      app: cicd-pipeline
       role: jenkins-slave
     name: jenkins-slaves
   data:
@@ -127,6 +126,7 @@ objects:
                oc delete all -l app=jenkins-persistent
                oc delete all -l app=nexus
                oc delete all -l app=sonarqube
+               oc delete configmap jenkins-slave
                sleep 15
             fi
             oc new-app jenkins-persistent
