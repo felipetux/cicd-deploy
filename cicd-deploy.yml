@@ -16,17 +16,6 @@ parameters:
   required: true
 objects:
 - apiVersion: v1
-  groupNames: null
-  kind: RoleBinding
-  metadata:
-    name: default_admin
-  roleRef:
-    name: admin
-  subjects:
-  - kind: ServiceAccount
-    name: default
-# Pipeline
-- apiVersion: v1
   kind: ConfigMap
   metadata:
     labels:
@@ -132,6 +121,9 @@ objects:
             fi
             oc new-app jenkins-persistent
             oc label dc jenkins app=jenkins --overwrite
+            oc label svc jenkins app=jenkins --overwrite
+            oc label svc jenkins-jnlp app=jenkins --overwrite
+            
             oc set resources dc/jenkins --limits=cpu=2,memory=4Gi --requests=cpu=100m,memory=2Gi
             
             #oc new-app -f http://git.bancogalicia.com.ar/TyT-Openshift/Ambientes/raw/master/Dev/sonarqube-persistent-template.yml
