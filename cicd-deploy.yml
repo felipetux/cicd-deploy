@@ -16,6 +16,16 @@ parameters:
   required: true
 objects:
 - apiVersion: v1
+  groupNames: null
+  kind: RoleBinding
+  metadata:
+    name: default_admin
+  roleRef:
+    name: admin
+  subjects:
+  - kind: ServiceAccount
+    name: default
+- apiVersion: v1
   kind: ConfigMap
   metadata:
     labels:
