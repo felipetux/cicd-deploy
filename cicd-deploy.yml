@@ -129,8 +129,7 @@ objects:
                oc delete configmap jenkins-slave
                sleep 15
             fi           
-            oc patch namespace cicd5 -p \
-    '{"metadata":{"annotations":{"openshift.io/node-selector":"cicd-tools=true"}}}'         
+            oc patch namespace cicd5 -p '{"metadata":{"annotations":{"openshift.io/node-selector":"cicd-tools=true"}}}'         
             oc new-app jenkins-persistent
           image: openshift3/jenkins-slave-base-rhel7
           name: cicd-deploy
