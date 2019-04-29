@@ -76,7 +76,7 @@ objects:
     template:
       spec:
         containers:
-          command:
+        - command:
           - /bin/bash
           - -x
           - -c
