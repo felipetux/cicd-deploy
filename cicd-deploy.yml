@@ -10,7 +10,7 @@ metadata:
   name: cicd
 message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials\nNexus: admin/admin123\nSonarQube: admin/admin\nGogs Git Server: gogs/gogs"
 parameters:
-- displayName: Remove apps on actual CICD Proyect
+- displayName: Remove apps on actual CICD Project
   value: "false"
   name: REMOVE_CICD
   required: true
@@ -140,7 +140,9 @@ objects:
             #oc new-app -f http://git.bancogalicia.com.ar/TyT-Openshift/Ambientes/raw/master/Dev/nexus3-persistent-template.yml
             
             oc new-app -f https://raw.githubusercontent.com/felipetux/cicd-deploy/master/nexus.yml
-            oc new-app -f https://raw.githubusercontent.com/felipetux/cicd-deploy/master/sonarqube.yml        
+            sleep 5
+            oc new-app -f https://raw.githubusercontent.com/felipetux/cicd-deploy/master/sonarqube.yml  
+            sleep 5
           image: openshift3/jenkins-slave-base-rhel7
           name: cicd-deploy
           resources: {}
