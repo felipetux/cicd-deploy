@@ -114,17 +114,17 @@ objects:
           - -c
           - |
             if [ "${REMOVE_CICD}" == "true" ] ; then
-               oc delete all -l app=jenkins
+               oc delete all -l app=jenkins-persistent
                oc delete all -l app=nexus
                oc delete all -l app=sonarqube
                sleep 15
             fi
             oc new-app jenkins-persistent
-            oc label dc jenkins app=jenkins --overwrite
-            oc label svc jenkins app=jenkins --overwrite
-            oc label svc jenkins-jnlp app=jenkins --overwrite
+            #oc label dc jenkins app=jenkins --overwrite
+            #oc label svc jenkins app=jenkins --overwrite
+            #oc label svc jenkins-jnlp app=jenkins --overwrite
             
-            oc set resources dc/jenkins --limits=cpu=2,memory=4Gi --requests=cpu=100m,memory=2Gi
+            oc set resources dc/jenkins --limits=cpu=2,memory=2Gi --requests=cpu=100m,memory=1Gi
             
             #oc new-app -f http://git.bancogalicia.com.ar/TyT-Openshift/Ambientes/raw/master/Dev/sonarqube-persistent-template.yml
             #oc new-app -f http://git.bancogalicia.com.ar/TyT-Openshift/Ambientes/raw/master/Dev/nexus3-persistent-template.yml
