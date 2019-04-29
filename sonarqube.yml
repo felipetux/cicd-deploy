@@ -43,6 +43,8 @@ objects:
   kind: PersistentVolumeClaim
   metadata:
     name: sonarqube-data
+    labels:
+      app: sonarqube    
   spec:
     accessModes:
     - ReadWriteOnce
