@@ -6,7 +6,7 @@ labels:
 metadata:
   annotations:
     iconClass: icon-jenkins
-    tags: instant-app,jenkins,nexus,cicd,sonarqube
+    tags: instant-app,jenkins,nexus,cicd
   name: cicd
 message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials\nNexus: admin/admin123\nSonarQube: admin/admin\nGogs Git Server: gogs/gogs"
 parameters:
@@ -14,117 +14,6 @@ parameters:
   value: "false"
   name: REMOVE_CICD
   required: true
-objects:
-- apiVersion: v1
-  groupNames: null
-  kind: RoleBinding
-  metadata:
-    name: default_admin
-  roleRef:
-    name: admin
-  subjects:
-  - kind: ServiceAccount
-    name: default
-- apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    labels:
-      app: cicd-pipeline
-      role: jenkins-slave
-    name: jenkins-slaves
-  data:
-    maven-template: |-
-      <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
-        <inheritFrom></inheritFrom>
-        <name>maven</name>
-        <privileged>false</privileged>
-        <alwaysPullImage>false</alwaysPullImage>
-        <instanceCap>2147483647</instanceCap>
-        <idleMinutes>0</idleMinutes>
-        <label>maven</label>
-        <serviceAccount>jenkins</serviceAccount>
-        <nodeSelector></nodeSelector>
-        <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
-        <workspaceVolume class="org.csanchez.jenkins.plugins.kubernetes.volumes.workspace.EmptyDirWorkspaceVolume">
-          <memory>false</memory>
-        </workspaceVolume>
-        <volumes />
-        <containers>
-          <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
-            <name>jnlp</name>
-            <image>openshift/jenkins-agent-maven-35-centos7</image>
-            <privileged>false</privileged>
-            <alwaysPullImage>false</alwaysPullImage>
-            <workingDir>/tmp</workingDir>
-            <command></command>
-            <args>${computer.jnlpmac} ${computer.name}</args>
-            <ttyEnabled>false</ttyEnabled>
-            <resourceRequestCpu>200m</resourceRequestCpu>
-            <resourceRequestMemory>512Mi</resourceRequestMemory>
-            <resourceLimitCpu>2</resourceLimitCpu>
-            <resourceLimitMemory>4Gi</resourceLimitMemory>
-            <envVars/>
-          </org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
-        </containers>
-        <envVars/>
-        <annotations/>
-        <imagePullSecrets/>
-      </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
-- apiVersion: batch/v1
-  kind: Job
-  metadata:
-    name: cicd-deploy
-  spec:
-    activeDeadlineSeconds: 180
-    completions: 1
-    parallelism: 1
-    template:
-      spec:
-        containers:
-        - command:
-          - /bin/bash
-          - -x
-          - -c
-          - |
-            
-            if [ "${REMOVECICD}" == "true" ] ; then
-               oc delete all -l app=jenkins
-               oc delete all -l app=nexus
-               oc delete all -l app=sonarqube
-               sleep 15
-            fi
-            
-            oc new-app jenkins-persistent
-            oc label dc jenkins app=jenkins --overwrite
-            oc set resources dc/jenkins --limits=cpu=2,memory=4Gi --requests=cpu=100m,memory=2Gi
-            
-            #oc new-app -f http://git.bancogalicia.com.ar/TyT-Openshift/Ambientes/raw/master/Dev/sonarqube-persistent-template.yml
-            #oc new-app -f http://git.bancogalicia.com.ar/TyT-Openshift/Ambientes/raw/master/Dev/nexus3-persistent-template.yml
-            
-            oc new-app -f https://raw.githubusercontent.com/felipetux/cicd-deploy/master/nexus.yml
-            oc new-app -f https://raw.githubusercontent.com/felipetux/cicd-deploy/master/sonarqube.yml
-            
-            #oc set resources dc/nexus --requests=cpu=200m,memory=1Gi --limits=cpu=1,memory=1Gi
-          image: openshift3/jenkins-slave-base-rhel7
-          name: cicd-deploy-job
-          resources: {}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-        restartPolicy: Never
-
-
-
-apiVersion: v1
-kind: Template
-labels:
-  template: cicd
-  group: cicd
-metadata:
-  annotations:
-    iconClass: icon-jenkins
-    tags: instant-app,jenkins,nexus,cicd
-  name: cicd
-message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials\nNexus: admin/admin123\nSonarQube: admin/admin\nGogs Git Server: gogs/gogs"
 objects:
 - apiVersion: v1
   groupNames: null
@@ -221,7 +110,7 @@ objects:
   metadata:
     name: cicd-demo-installer
   spec:
-    activeDeadlineSeconds: 400
+    activeDeadlineSeconds: 180
     completions: 1
     parallelism: 1
     template:
