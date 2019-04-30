@@ -75,8 +75,7 @@ objects:
         terminationGracePeriodSeconds: 30
         volumes:
         - name: nexus-data
-          persistentVolumeClaim:
-            claimName: nexus-pv
+          emptyDir: {}
     test: false
     triggers:
     - type: ConfigChange
