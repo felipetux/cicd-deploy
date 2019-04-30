@@ -40,7 +40,7 @@ objects:
             command:
               - "/bin/bash"
               - "-c"
-              - "curl -o /tmp/nexus-functions -s http://https://raw.githubusercontent.com/felipetux/cicd-deploy/master/nexus_functions; source /tmp/nexus-functions; add_nexus3_redhat_repos admin admin123 http://${SERVICE_NAME}:8081"
+              - "curl -o /tmp/nexus-functions -s https://raw.githubusercontent.com/felipetux/cicd-deploy/master/nexus_functions; source /tmp/nexus-functions; add_nexus3_redhat_repos admin admin123 http://${SERVICE_NAME}:8081"
       type: Recreate
     template:
       metadata:
