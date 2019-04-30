@@ -129,9 +129,7 @@ objects:
                oc delete configmap jenkins-slave
                sleep 15
             fi
-            
-            oc adm new-project cicd5 --node-selector='cicd-tools=true'
-            
+                    
             oc new-app jenkins-persistent
             #oc set resources dc/jenkins --limits=cpu=2,memory=2Gi --requests=cpu=100m,memory=1Gi
             
