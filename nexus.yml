@@ -40,7 +40,7 @@ objects:
             command:
               - "/bin/bash"
               - "-c"
-              - "echo OK"
+              - "echo"
       type: Recreate
     template:
       metadata:
